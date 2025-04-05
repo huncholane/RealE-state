@@ -20,3 +20,4 @@
 
 - Made a .env.example to show what needs to be done.
 - Unsure what to do for the attendees part, but have implemented, view, delete many, delete, view many, and edit
+- View the demo at https://d3fbidtlx1nq37.cloudfront.net hosted with AWS cloudfront, s3, ec2, and docker
