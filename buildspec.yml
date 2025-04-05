@@ -16,6 +16,7 @@ phases:
       # - cd Client
       # - echo Running npm run build in the Client folder...
       # - npm run build
+      - ls
 
   post_build:
     commands:
