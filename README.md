@@ -19,4 +19,4 @@
 ## Solution
 
 - I set the constant baseUrl in the code for demonstration purpose. It should be set in the environment.
--
+- Unsure what to do for the attendees part, but have implemented, view, delete many, delete, view many, and edit
