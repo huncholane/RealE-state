@@ -22,7 +22,6 @@ phases:
     commands:
       # Copy the build output to your S3 bucket
       - echo Copying build files to S3 bucket...
-      - aws s3 website
       - aws s3 sync ./Client/build/ "s3://hygo.real.e-state/" --delete
 cache:
   paths:
