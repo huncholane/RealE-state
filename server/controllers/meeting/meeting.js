@@ -1,24 +1,68 @@
-const MeetingHistory = require('../../model/schema/meeting')
-const mongoose = require('mongoose');
+const MeetingHistory = require("../../model/schema/meeting");
+const mongoose = require("mongoose");
 
 const add = async (req, res) => {
-   
-}
+  try {
+    req.body.createdDate = new Date();
+    const user = new MeetingHistory(req.body);
+    await user.save();
+    res.status(200).json(user);
+  } catch (err) {
+    console.error("Failed to create Lead:", err);
+    res.status(400).json({ error: "Failed to create Lead" });
+  }
+};
 
 const index = async (req, res) => {
-    
-}
+  const query = req.query;
+  query.deleted = false;
+
+  // let result = await Lead.find(query)
+
+  let allData = await MeetingHistory.find(query)
+    .populate({
+      path: "createBy",
+      match: { deleted: false }, // Populate only if createBy.deleted is false
+    })
+    .exec();
+
+  const result = allData.filter((item) => item.createBy !== null);
+  res.send(result);
+};
 
 const view = async (req, res) => {
-    
-}
+  console.log("getting view");
+  try {
+    let response = await MeetingHistory.findOne({ _id: req.params.id });
+    if (!response) return res.status(404).json({ message: "no Data Found." });
+    let result = await MeetingHistory.aggregate([
+      { $match: { _id: response._id } },
+      {
+        $lookup: {
+          from: "User",
+          localField: "createBy",
+          foreignField: "_id",
+          as: "users",
+        },
+      },
+      { $unwind: { path: "$users", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          createByName: "$users.username",
+        },
+      },
+      { $project: { contact: 0, users: 0, Lead: 0, createdByName: 0 } },
+    ]);
+    console.log(result[0]);
+    res.status(200).json(result[0]);
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(400).json({ Error: err });
+  }
+};
 
-const deleteData = async (req, res) => {
-  
-}
+const deleteData = async (req, res) => {};
 
-const deleteMany = async (req, res) => {
-    
-}
+const deleteMany = async (req, res) => {};
 
-module.exports = { add, index, view, deleteData, deleteMany }
+module.exports = { add, index, view, deleteData, deleteMany };
