@@ -91,7 +91,7 @@ const AddMeeting = (props) => {
             if (response.status === 200) {
                 props.onClose();
                 toast.success(`Updated the meeting 😄`);
-                props.setData({ ...values, createByName: props.init.createByName });
+                props.setData({ ...values, createByName: props.init.createByName, timestamp: new Date() });
             }
         } catch (e) {
             console.log(e);
