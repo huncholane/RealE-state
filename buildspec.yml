@@ -1,0 +1,28 @@
+version: 0.2
+
+env:
+  variables:
+    REACT_APP_BASE_URL: "http://localhost:5001/"
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - cd Client && npm i
+      - cd ../server && npm i
+
+  build:
+    commands:
+      - cd Client
+      - echo Running npm run build in the Client folder...
+      - npm run build
+
+  post_build:
+    commands:
+      # Copy the build output to your S3 bucket
+      - echo Copying build files to S3 bucket...
+      - aws s3 sync ./Client/build/ s3://hygo.real-estate/ --delete
+cache:
+  paths:
+    - Client/node_modules
+    - server/node_modules
