@@ -22,6 +22,7 @@ const AddMeeting = (props) => {
     const [leadModelOpen, setLeadModel] = useState(false);
     const todayTime = new Date().toISOString().split('.')[0];
     const leadData = useSelector((state) => state?.leadData?.data);
+    console.log(props.init);
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -90,7 +91,7 @@ const AddMeeting = (props) => {
             if (response.status === 200) {
                 props.onClose();
                 toast.success(`Updated the meeting 😄`);
-                props.setData({ ...values });
+                props.setData({ ...values, createByName: props.init.createByName });
             }
         } catch (e) {
             console.log(e);

@@ -181,7 +181,7 @@ const View = () => {
                                         </Text>
                                         <Text>
                                             {' '}
-                                            {data?.dateTime ? moment(data?.dateTime).format('DD-MM-YYYY  h:mma ') : ' - '} [{data?.dateTime ? moment(data?.dateTime).toNow() : ' - '}]
+                                            {data?.dateTime ? moment(data?.dateTime).format('DD-MM-YYYY  h:mma ') : ' - '} [{data?.dateTime ? moment(data?.dateTime).fromNow() : ' - '}]
                                         </Text>
                                     </GridItem>
                                     <GridItem colSpan={{ base: 2, md: 1 }}>
@@ -191,7 +191,7 @@ const View = () => {
                                         </Text>
                                         <Text>
                                             {' '}
-                                            {data?.timestamp ? moment(data?.timestamp).format('DD-MM-YYYY  h:mma ') : ' - '} [{data?.timestamp ? moment(data?.timestamp).toNow() : ' - '}]
+                                            {data?.timestamp ? moment(data?.timestamp).format('DD-MM-YYYY  h:mma ') : ' - '} [{data?.timestamp ? moment(data?.timestamp).fromNow() : ' - '}]
                                         </Text>
                                     </GridItem>
                                     <GridItem colSpan={{ base: 2, md: 1 }}>
