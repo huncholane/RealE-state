@@ -23,5 +23,5 @@ phases:
       - aws s3 sync ./Client/build/ "s3://hygo.real-e-state/" --delete
 cache:
   paths:
-    - Client/node_modules
-    - server/node_modules
+    - Client/node_modules/**/*
+    - server/node_modules/**/*
