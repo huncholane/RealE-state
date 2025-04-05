@@ -20,4 +20,4 @@
 
 - I set the constant baseUrl in the code for demonstration purpose. It should be set in the environment.
 - Unsure what to do for the attendees part, but have implemented, view, delete many, delete, view many, and edit
-- Website available at https://real-e-state-hygo.s3-us-west-1.amazonaws.com/
+- Website available at https://real-e-state-hygo.s3-us-west-1.amazonaws.com/index.html
