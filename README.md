@@ -18,5 +18,5 @@
 
 ## Solution
 
-- I set the constant baseUrl in the code for demonstration purpose. It should be set in the environment.
+- Made a .env.example to show what needs to be done.
 - Unsure what to do for the attendees part, but have implemented, view, delete many, delete, view many, and edit
