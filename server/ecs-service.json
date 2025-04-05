@@ -1,0 +1,15 @@
+{
+  "cluster": "real-e-state",
+  "serviceName": "real-e-state",
+  "taskDefinition": "real-e-state",
+  "availabilityZoneRebalancing": "ENABLED",
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": ["subnet-0b24b3ccc388060c5", "subnet-04276bf103f8b8bd9"],
+      "securityGroups": ["sg-07a7512a19c273344"],
+      "assignPublicIp": "ENABLED"
+    }
+  }
+}

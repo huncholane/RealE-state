@@ -1,0 +1,22 @@
+{
+  "family": "real-e-state",
+  "networkMode": "awsvpc",
+  "taskRoleArn": "arn:aws:iam::036487096349:role/ecs-task-role",
+  "containerDefinitions": [
+    {
+      "name": "real-e-state",
+      "image": "huncholane/real-e-state",
+      "portMappings": [
+        {
+          "containerPort": 5001,
+          "hostPort": 5001,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512"
+}
