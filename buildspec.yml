@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     REACT_APP_BASE_URL: "http://localhost:5001/"
+    CLOUDFRONT_ID: "E1VDTBR7TV8GO0"
 
 phases:
   install:
@@ -10,6 +11,15 @@ phases:
       - echo Installing dependencies...
       - cd Client && npm i
       - cd ../server && npm i
+      - echo Ensuring artifact bucket
+      - aws s3api create-bucket --bucket hygo.real-e-state.artifacts --create-bucket-configuration LocationConstraint=us-west-1
+      - echo Ensuring cache bucket
+      - aws s3api create-bucket --bucket hygo.real-e-state.cache --create-bucket-configuration LocationConstraint=us-west-1
+      - echo Ensuring frontend bucket
+      - aws s3api create-bucket --bucket hygo.real-e-state.frontend --create-bucket-configuration LocationConstraint=us-west-1
+      - aws s3api delete-public-access-block --bucket hygo.real-e-state.frontend
+      - aws s3api put-bucket-policy --bucket hygo.real-e-state.frontend --policy file://Client/bucket-policy.json
+      - aws s3 website hygo.real-e-state.frontend --index index.html --error index.html
 
   build:
     commands:
@@ -21,7 +31,8 @@ phases:
     commands:
       # Copy the build output to your S3 bucket
       - echo Copying build files to S3 bucket...
-      - aws s3 sync ./Client/build/ s3://hygo.real-estate/ --delete
+      - aws s3 website
+      - aws s3 sync ./Client/build/ s3://hygo.real-e-state/ --delete
 cache:
   paths:
     - Client/node_modules
