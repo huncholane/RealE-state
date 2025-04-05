@@ -294,7 +294,7 @@ const View = () => {
             )}
             {/* Delete model */}
             <CommonDeleteModel isOpen={deleteMany} onClose={() => setDeleteMany(false)} type="Meetings" handleDeleteData={handleDeleteMeeting} ids={params.id} />
-            <AddMeeting isOpen={edit} fetchData={fetchData} onClose={() => setEdit(false)} userAction={'edit'} id={params.id} />
+            <AddMeeting isOpen={edit} fetchData={fetchData} onClose={() => setEdit(false)} userAction={'edit'} id={params.id} init={data} />
         </>
     );
 };

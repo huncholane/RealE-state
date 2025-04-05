@@ -10,6 +10,7 @@ import { LiaMousePointerSolid } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { MeetingSchema } from 'schema';
+import { putApi } from 'services/api';
 import { getApi, postApi } from 'services/api';
 
 const AddMeeting = (props) => {
@@ -41,11 +42,24 @@ const AddMeeting = (props) => {
         initialValues: initialValues,
         validationSchema: MeetingSchema,
         onSubmit: (values, { resetForm }) => {
-            AddData();
+            console.log('saving');
+            if (props.id) {
+                editData();
+            } else {
+                AddData();
+            }
         },
     });
 
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik;
+
+    useEffect(() => {
+        values.agenda = props.init?.agenda || '';
+        values.location = props.init?.location || '';
+        values.dateTime = props.init?.dateTime || '';
+        values.notes = props.init?.notes || '';
+        values.related = props.init?.related;
+    }, [props.init]);
 
     const AddData = async () => {
         try {
@@ -62,6 +76,27 @@ const AddMeeting = (props) => {
         } catch (e) {
             console.log(e);
             toast.error('Failed to add meeting 😞');
+        } finally {
+            setIsLoding(false);
+        }
+    };
+
+    const editData = async () => {
+        try {
+            setIsLoding(true);
+            let response = await putApi('api/meeting/edit', {
+                ...values,
+                _id: props.id,
+            });
+            if (response.status === 200) {
+                props.onClose();
+                formik.resetForm();
+                props.setAction((pre) => !pre);
+                toast.success(`Updated the meeting 😄`);
+            }
+        } catch (e) {
+            console.log(e);
+            toast.error('Failed to update meeting 😞');
         } finally {
             setIsLoding(false);
         }
@@ -85,7 +120,7 @@ const AddMeeting = (props) => {
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay />
             <ModalContent height={'580px'}>
-                <ModalHeader>Add Meeting </ModalHeader>
+                <ModalHeader>{props.init ? 'Edit' : 'Add'} Meeting </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody overflowY={'auto'} height={'400px'}>
                     {/* Contact Model  */}

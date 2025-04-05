@@ -93,4 +93,19 @@ const deleteMany = async (req, res) => {
   }
 };
 
-module.exports = { add, index, view, deleteData, deleteMany };
+const edit = async (req, res) => {
+  try {
+    let result = await MeetingHistory.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: req.body },
+      { new: true }
+    );
+
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("Failed to create task:", err);
+    res.status(400).json({ error: "Failed to create task : ", err });
+  }
+};
+
+module.exports = { add, index, view, deleteData, deleteMany, edit };
