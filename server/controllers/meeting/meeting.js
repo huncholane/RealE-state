@@ -97,7 +97,7 @@ const edit = async (req, res) => {
   try {
     let result = await MeetingHistory.findOneAndUpdate(
       { _id: req.params.id },
-      { $set: req.body },
+      { $set: { ...req.body, timestamp: new Date() } },
       { new: true }
     );
 
