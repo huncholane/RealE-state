@@ -61,8 +61,36 @@ const view = async (req, res) => {
   }
 };
 
-const deleteData = async (req, res) => {};
+const deleteData = async (req, res) => {
+  try {
+    const result = await MeetingHistory.findByIdAndUpdate(req.params.id, {
+      deleted: true,
+    });
+    res.status(200).json({ message: "done", result });
+  } catch (err) {
+    res.status(404).json({ message: "error", err });
+  }
+};
 
-const deleteMany = async (req, res) => {};
+const deleteMany = async (req, res) => {
+  try {
+    const result = await MeetingHistory.updateMany(
+      { _id: { $in: req.body } },
+      { $set: { deleted: true } }
+    );
+
+    if (result?.matchedCount > 0 && result?.modifiedCount > 0) {
+      return res
+        .status(200)
+        .json({ message: "Meeting History Removed successfully", result });
+    } else {
+      return res
+        .status(404)
+        .json({ success: false, message: "Failed to remove tasks" });
+    }
+  } catch (err) {
+    return res.status(404).json({ success: false, message: "error", err });
+  }
+};
 
 module.exports = { add, index, view, deleteData, deleteMany };
