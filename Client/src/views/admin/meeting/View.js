@@ -13,6 +13,7 @@ import { deleteApi } from 'services/api';
 import CommonDeleteModel from 'components/commonDeleteModel';
 import { FaFilePdf } from 'react-icons/fa';
 import html2pdf from 'html2pdf.js';
+import AddMeeting from './components/Addmeeting';
 const View = () => {
     const param = useParams();
 
@@ -21,6 +22,7 @@ const View = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const [isLoding, setIsLoding] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [edit, setEdit] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
 
@@ -36,8 +38,6 @@ const View = () => {
     }, []);
 
     const handleClick = () => {};
-
-    const setEdit = () => {};
 
     const setDeleteManyModel = () => {};
 
@@ -141,7 +141,7 @@ const View = () => {
                                                             {(user.role === 'superAdmin' || permission?.delete) && (
                                                                 <>
                                                                     <MenuDivider />
-                                                                    <MenuItem alignItems={'start'} onClick={() => setDeleteManyModel(true)} color={'red'} icon={<DeleteIcon />}>
+                                                                    <MenuItem alignItems={'start'} onClick={() => setDeleteMany(true)} color={'red'} icon={<DeleteIcon />}>
                                                                         Delete
                                                                     </MenuItem>
                                                                 </>
@@ -294,6 +294,7 @@ const View = () => {
             )}
             {/* Delete model */}
             <CommonDeleteModel isOpen={deleteMany} onClose={() => setDeleteMany(false)} type="Meetings" handleDeleteData={handleDeleteMeeting} ids={params.id} />
+            <AddMeeting isOpen={edit} fetchData={fetchData} onClose={() => setEdit(false)} userAction={'edit'} id={params.id} />
         </>
     );
 };
