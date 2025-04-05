@@ -22,7 +22,6 @@ const AddMeeting = (props) => {
     const [leadModelOpen, setLeadModel] = useState(false);
     const todayTime = new Date().toISOString().split('.')[0];
     const leadData = useSelector((state) => state?.leadData?.data);
-    console.log(props.init);
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -43,7 +42,6 @@ const AddMeeting = (props) => {
         initialValues: initialValues,
         validationSchema: MeetingSchema,
         onSubmit: (values, { resetForm }) => {
-            console.log('saving');
             if (props.id) {
                 editData();
             } else {
@@ -75,7 +73,7 @@ const AddMeeting = (props) => {
                 toast.success(`Added a meeting for ${values.dateTime} 😄`);
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
             toast.error('Failed to add meeting 😞');
         } finally {
             setIsLoding(false);
@@ -94,7 +92,7 @@ const AddMeeting = (props) => {
                 props.setData({ ...values, createByName: props.init.createByName, timestamp: new Date() });
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
             toast.error('Failed to update meeting 😞');
         } finally {
             setIsLoding(false);
