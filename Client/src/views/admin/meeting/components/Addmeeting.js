@@ -84,15 +84,13 @@ const AddMeeting = (props) => {
     const editData = async () => {
         try {
             setIsLoding(true);
-            let response = await putApi('api/meeting/edit', {
+            let response = await putApi(`api/meeting/edit/${props.id}`, {
                 ...values,
-                _id: props.id,
             });
             if (response.status === 200) {
                 props.onClose();
-                formik.resetForm();
-                props.setAction((pre) => !pre);
                 toast.success(`Updated the meeting 😄`);
+                props.setData({ ...values });
             }
         } catch (e) {
             console.log(e);
